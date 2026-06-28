@@ -1,2 +1,17 @@
-# n8n-learning-projects
-in this repo i am sharing my byte sized progress of learnig ai automation with tools like n8n , zapier and make.com and hopefully in future i'll proceed to the level where i can make full agentic workflows
+# AI Email Generator
+
+## Description
+This n8n workflow:
+1. Receives a prompt
+2. Uses Google Gemini to generate an email
+3. Sends the email through Gmail
+
+## Technologies
+- n8n
+- Google Gemini
+- Gmail
+
+## Learning Goals
+- AI integration
+- Prompt engineering
+- Email automation
