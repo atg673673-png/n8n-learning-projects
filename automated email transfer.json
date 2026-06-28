@@ -1,0 +1,148 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        48,
+        -160
+      ],
+      "id": "e982e47e-c23c-4579-b0c6-81b18f60f5aa",
+      "name": "When chat message received",
+      "webhookId": "67848fec-bc4f-4fb1-9c72-653a3ca5caff"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful assistant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        256,
+        -160
+      ],
+      "id": "9ad10373-03ef-46b6-9312-71963ba738f1",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        128,
+        48
+      ],
+      "id": "fdbe18bb-df96-4c25-86ed-cb2d0c5feede",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "PgBRuzeYTegKt2MF",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        320,
+        80
+      ],
+      "id": "7b59ff75-2641-4af9-a852-92f3da7b3c9c",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "fromEmail": "atg673673@gmail.com",
+        "toEmail": "i253142@isb.nu.edu.pk",
+        "subject": "atg673673@gmail.com",
+        "emailFormat": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSendTool",
+      "typeVersion": 2.1,
+      "position": [
+        528,
+        48
+      ],
+      "id": "42b84203-ef92-4d3d-8520-c7ed174f5a32",
+      "name": "Send an Email in Send Email",
+      "webhookId": "f166a237-0d34-4770-ad1d-209e2dedd55b",
+      "credentials": {
+        "smtp": {
+          "id": "d3b1TjTuU4xlz9b7",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an Email in Send Email": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "0defc484-5bc5-47d4-80ff-0f3f1260daa4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d1ab68caaecddc00870d7c84e1eb5a9f8e481132996e2ac799c4a83a5c42263"
+  },
+  "nodeGroups": [],
+  "id": "sXUE2ZzeT1VGUZTC",
+  "tags": []
+}
