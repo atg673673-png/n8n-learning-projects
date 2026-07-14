@@ -1,0 +1,225 @@
+{
+  "name": "My workflow 6",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "How many subjects do i have in this schedule",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -816,
+        -320
+      ],
+      "id": "c9115a45-5b5a-4886-8095-f800eaab649b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -1024,
+        0
+      ],
+      "id": "4b12026b-be19-4563-b70a-11c7984272d0",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "A0JeYoruW4Lj9f3L",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "test-session"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -768,
+        80
+      ],
+      "id": "b6f159ec-3ba0-41f3-8e19-3034fcbe2ed7",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1H3dmY5AmTXwhJO2dva3wYIJjdC9VjMPCkRO5n25q6IQ",
+          "mode": "list",
+          "cachedResultName": "trial_2_schedule",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H3dmY5AmTXwhJO2dva3wYIJjdC9VjMPCkRO5n25q6IQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "trial_2_scheudule",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H3dmY5AmTXwhJO2dva3wYIJjdC9VjMPCkRO5n25q6IQ/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -496,
+        -32
+      ],
+      "id": "bdee4256-3c08-4545-b80b-f2c9b65acd1a",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5t6Nv8xpJEDoyE5D",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "1260732410446738",
+        "recipientPhoneNumber": "+923281275473",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        -304,
+        -288
+      ],
+      "id": "2c66b32d-6f56-4cb7-972d-1a0bbefc34e0",
+      "name": "Send message",
+      "webhookId": "3fdf48d1-6743-4d09-8576-c6756e3ef21a",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "o76cbucAZzOOQJ0z",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": [
+            "all"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1296,
+        -128
+      ],
+      "id": "5e4897c7-c114-41c4-8ad2-99fd1c5abeda",
+      "name": "WhatsApp Trigger",
+      "webhookId": "b552d0de-f95e-4fce-82a2-4e9c1f96f91f",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "wFMH0kffMQkdMuf1",
+          "name": "WhatsApp OAuth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1248,
+        -320
+      ],
+      "id": "7f5070ef-eb36-4ce4-9c0c-4caa88701b0c",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        []
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "23873630-7bcb-4fef-9784-fac2b43df64e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d1ab68caaecddc00870d7c84e1eb5a9f8e481132996e2ac799c4a83a5c42263"
+  },
+  "nodeGroups": [],
+  "id": "8p5xjiI3v8rLPs8a",
+  "tags": []
+}
